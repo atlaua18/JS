@@ -18,3 +18,4 @@ console.log(Math.sqrt(
 ));
 
 проверка1
+проверка2
