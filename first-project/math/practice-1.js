@@ -54,7 +54,7 @@ let d = b * b - 4 * a * c;
 //корень дискриминанта
 let dRoot = Math.sqrt(d);
 console.log('x1 = ', (-b + dRoot) / (2 * a));
-console.log('x2 = ', (-b + dRoot) / (2 * a));
+console.log('x2 = ', (-b - dRoot) / (2 * a));
 
 
 

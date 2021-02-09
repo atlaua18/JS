@@ -18,19 +18,19 @@
 
 // Вычислите дробные части чисел a и b с точностью n. Выведите получившиеся числа с помощью console.log. Выведите результаты их сравнения >, <, ≥, ≤, ===, ≠ с помощью console.log.
 
-let a = 13.123456789;
-let b = 2.123;
-let n = 5; // precision - точность
+// let a = 13.123456789;
+// let b = 2.123;
+// let n = 5; // precision - точность
 
-console.log('Дробная часть a', Math.floor(a % 1 * Math.pow(10, n)));
-console.log('Дробная часть b', Math.floor(b % 1 * Math.pow(10, n)));
+// console.log('Дробная часть a', Math.floor(a % 1 * Math.pow(10, n)));
+// console.log('Дробная часть b', Math.floor(b % 1 * Math.pow(10, n)));
 
-let aNormalized = Math.floor(a % 1 * Math.pow(10, n));
-let bNormalized = Math.floor(b % 1 * Math.pow(10, n));
+// let aNormalized = Math.floor(a % 1 * Math.pow(10, n));
+// let bNormalized = Math.floor(b % 1 * Math.pow(10, n));
 
-console.log('Дробные части равны', aNormalized === bNormalized);
-console.log('Дробная часть первого числа больше', aNormalized > bNormalized);
-console.log('Дробная часть первого числа меньше', aNormalized < bNormalized);
+// console.log('Дробные части равны', aNormalized === bNormalized);
+// console.log('Дробная часть первого числа больше', aNormalized > bNormalized);
+// console.log('Дробная часть первого числа меньше', aNormalized < bNormalized);
 
 
 
@@ -62,3 +62,19 @@ console.log('Дробная часть первого числа меньше', 
 // let number = Math.floor(Math.random() * maxmin / 2) * 2 + 1;
  
 // console.log(number);
+
+let n = 100;
+let m = -5;
+
+let range = Math.abs(m-n);
+let numberInRange = Math.round(Math.random() * range);
+let min = Math.min(n,m);
+let num = min + numberInRange;
+
+if (num % 2 === 1) {
+    console.log(num);
+} else if (num % 2 === - 1) {
+    console.log(num);
+} else {
+    console.log('четное');
+}
