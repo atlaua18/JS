@@ -12,13 +12,31 @@ let roadMines = [false, true, false, true, true, false, false, false, false, fal
 
 // let mins = 'true';
 
-let mins2 = false;
+// let mins2 = false;
 
-for (let i = roadMines.length - 10; i <= 9; ++i) {
+let lives = 2;
+
+// for (let i = roadMines.length - 10; i <= 9; ++i)
+
+// let flag = false;
+// while (!flag) {
+//     console.log(lives++ > 3);
+//     console.log(++lives > 3);
+//     if(lives === 10) flag = true;
+// }
+
+for (let i = 0; i < roadMines.length; ++i) {
     // console.log(roadMines[i]);
     // if (roadMines[i] === false) {
+    
     console.log (`танк переместился на ${parseInt(i) + 1}`);
     if (roadMines[i] === true) {
+        lives--;
+        // lives === 0 ? console.log('танк уничтожен') : console.log('танк повреждён');
+        if(lives === 0) {
+            console.log('танк уничтожен');
+            break;
+        }
         console.log('танк повреждён');
     }
     // if (roadMines[i++] === true) {
