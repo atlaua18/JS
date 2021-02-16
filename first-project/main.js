@@ -1,6 +1,12 @@
 console.log ('Привет, мир')
 
 
+
+
+
+
+
+
 let person = {};
 let person1 = {
     child : {
