@@ -26,18 +26,27 @@ function totalAmount(totalSum, numberOfProducts, promoCode) {
 
     let finalSum;
      
-    promoCode = prompt(`Введите промокод: `);
+    // promoCode = prompt(`Введите промокод: `);
+    let x = false;
 
+    while (!x) {
+        promoCode = prompt(`Введите промокод: `);
     if(promoCode == 'ДАРИМ300' && totalSum <= 300) {
         console.log('Общая сумма меньше 300. Промокод и последующие скидки не могут быть применены.')
+        // x = true;
         return 'Итоговая сумма покупки: ' + totalSum;
     } else if (promoCode == 'ДАРИМ300' && totalSum > 300) {
         finalSum = totalSum - 300;
+        x = true;
         console.log('Промокод скидка 300: ' + finalSum);
     } else if(promoCode == null) {
         finalSum = totalSum;
+        x = true;
         console.log(`Промокод отсутствует, сумма осталась прежней: ${finalSum}`);
+    } else if(promoCode !== 'ДАРИМ300' || promoCode !== null) {
+        alert('Промокод не верный. Попробуйте еще раз.');
     }
+}
     
     if(numberOfProducts >= 10) {
         finalSum = finalSum - finalSum * 0.05; //finalSum *= 0.5; //finalSum = finalSum * 0.95
@@ -54,18 +63,25 @@ function totalAmount(totalSum, numberOfProducts, promoCode) {
         console.log('Общая сумма покупок меньше 50000, скидка не может быть применена. Сумма: ' + finalSum);
     }
 
-    promoCode = prompt(`Введите промокод: `);
-
+    let y = false; 
+    while(!y) {
+        promoCode = prompt(`Введите промокод: `);
     if(promoCode == 'СКИДКА15' && finalSum >= 20000) {
         finalSum = finalSum * 0.85;
+        y = true;
         console.log('Промокод скидка 15%: ' + finalSum);
     } else if(promoCode == 'СКИДКА15' && finalSum < 20000) {
+        y = true;
         console.log('Общая сумма покупок меньше 20000, промокод не может быть применен. Сумма: ' + finalSum);
     } else if(promoCode == null) {
+        y = true;
         console.log('Промокод отсутствует. Сумма: ' + finalSum);
+    } else if (promoCode !== 'СКИДКА15' &&  promoCode !== null) {
+        alert('Промокод не верный. Попробуйте еще раз.');
     }
+}
 
     return 'Конечная стоимость: ' + finalSum;
 }
 
-console.log(totalAmount(350, 9, promoCode));
+console.log(totalAmount(35000000, 19, promoCode));
