@@ -1,3 +1,5 @@
+// const start = new Date().getTime();
+
 export default function binarySearch (sortedArray, element) {
 
     let currentIndex = sortedArray.length / 2,
@@ -7,7 +9,7 @@ export default function binarySearch (sortedArray, element) {
 
     while(!isFounded) {
        if(sortedArray[currentIndex] === element) {
-           console.log(`Элемент найден. Индекс элемента ${currentIndex}`);
+           console.log(`Элемент найден ${element}. Индекс элемента ${currentIndex}`);
            isFounded = true;
        } else if(sortedArray[currentIndex] > element) {
            highIndex = currentIndex;
@@ -18,6 +20,15 @@ export default function binarySearch (sortedArray, element) {
        }
     }
 }
+
+// const end = new Date().getTime();
+
+// console.log('Бинарный поиск:')
+
+// console.log(`Время запуска ${start}ms`);
+// console.log(`Время окончания ${end}ms`);
+
+// console.log(`Выполнилось за: ${end - start}ms`);
 
 // let array = [];
 
