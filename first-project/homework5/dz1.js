@@ -4,39 +4,54 @@ let information = [
     { name: 'Пётр', surname: 'Петров' }
 ]
 
-let newInformation;
+let newInformation = [];
 
-function filterArray(someObject, value) {
+function filterArray(someObject, key, value) {
 
-    for (let i = 0; i < information.length; i++) {
+    for (let i = 0; i < someObject.length; i++) {
 
         let objectFromArray = someObject[i];
 
-        let nameFromObject = objectFromArray.name;
+        // let nameFromObject = someObject[i].name;
 
-        if (nameFromObject === value) {
+        if (objectFromArray[key] === value) {
             // newInformation = Object.assign([{}], objectFromArray); // [ {}, name: 'Иван', surname: 'Иванов' ]
-            newInformation = Object.assign({}, objectFromArray);
-        } else {
-            continue;
-        }
+            // newInformation = Object.assign({}, objectFromArray); // {name: "Иван", surname: "Иванов"}
+            // newInformation.push(Object.assign({}, objectFromArray)); // [ { name: 'Иван', surname: 'Иванов' } ]
+            newInformation.push(objectFromArray);
+        } 
     }
 
 }
 
-filterArray(information, 'Иван');
-console.log(newInformation);
+filterArray(information, 'surname', 'Петров');
+console.log(newInformation); 
+
+
 
 // function filterArray(someObject, key, value) {
 
-//     let objectFromArray = someObject[1];
-//     let nameFromObject = objectFromArray.name;
+//     for (let i = 0; i < someObject.length; i++) {
 
-//     if (nameFromObject === value) {
-//         newInformation = Object.assign({}, objectFromArray);
-//     } 
-//     // return newInformation;
+//         let objectFromArray = someObject[i];
+
+//         let nameFromObject = someObject[i].key; // "Иван", не name
+
+//         if (nameFromObject === value) {
+//             newInformation = Object.assign({}, objectFromArray );
+//         } else {
+//             continue;
+//         }
+//     }
 // }
+
+// filterArray(information, 'name', 'Иван');
+// console.log(newInformation);
+
+
+
+
+
 
 // filterArray(information, 'name', 'Иван');
 

@@ -12,6 +12,8 @@ let computer = {
     price: 100000,
 };
 
-console.log(Object.keys(computer)); // воводит то, что до :, то есть [usbPortCount, chipset] и тд // массив
+// console.log(computer['chipset']);
+
+console.log(Object.keys(computer)); // выводит то, что до :, то есть [usbPortCount, chipset] и тд // массив
 console.log(Object.values(computer)); // выводит то, что после :, то есть [8, 'AMD X570', 8] и тд // массив
 console.log(Object.entries(computer)); // выводит все сразу // массив из массивов, то есть [[usbPortCount: 8], [chipset: 'AMD X570'], [coreCount: 8,]] 

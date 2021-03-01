@@ -8,10 +8,62 @@
     <!-- <script src="main.js"></script> -->
     <!-- <script src="game.js"></script> -->
     <!-- <script src="/homework4/dz2.js"></script> -->
-    <script src="/homework5/dz1.js"></script>
+    <!-- <script src="/homework5/dz2.js"></script> -->
+    <!-- <script src="./module6(objects)/keys-values-entries.js"></script> -->
     <title>Document</title>
 </head>
 <body>
-    ТУТ БЫЛА ПРОВЕРКА
+    <div id="org_div1">Текст выше сгенерирован автоматически.</div>
 </body>
+<script>
+    document.body.onload = addElement;
+    var my_div = null;
+
+  
+    function addElement() {
+  
+      // Создаем новый элемент div
+      // и добавляем в него немного контента
+        
+      let select = document.createElement('select');
+
+        let massObjects = [ //определить за пределами функциями
+            {value: 1, label: "some123 1"},
+            {value: 2, label: "some 2"},
+            {value: 3, label: "some 3"},
+            {value: 4, label: "some 4"},
+            {value: 5, label: "some 5"},
+            {value: 6, label: "some 6"},
+            {value: 7, label: "some 7"},
+            {value: 8, label: "some 8"}
+        ];
+
+        // let i = 0;
+        // while(i < 10) {
+        //     let option = document.createElement('option');
+
+        // }
+        for (let i=0; i<massObjects.length; i++) {
+            let option = document.createElement('option');
+            option.value = massObjects[i].value;
+            option.innerHTML = massObjects[i].label;
+            select.append(option);
+            //massOption.push(document.createElement('option'));
+        }
+    //   var newDiv = document.createElement("select");
+    //   var newOption = document.createElement("option");
+    //     newOption.value = 1; //value
+    //     newOption.innerHTML = "Привет!123"; //label
+    //     newDiv.append(newOption);
+    //     var newOption2 = document.createElement("option");
+    //     newOption2.value = 2; //value
+    //     newOption2.innerHTML = "Пока !"; //label
+    //     newDiv.append(newOption2);
+  
+      // Добавляем только что созданый элемент в дерево DOM
+  
+      my_div = document.getElementById("org_div1");
+      document.body.insertBefore(select, my_div);
+    }
+  </script>
 </html>
