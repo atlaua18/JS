@@ -2,59 +2,91 @@ document.addEventListener('DOMContentLoaded', function () {
   document.body.innerHTML = "<h2>Я загадал число от 0 до 100. Попробуйте его угадать</h2>";
   let div = document.createElement('div');
   let inputNumber = document.createElement('input');
-  // let randomNumber = document.createElement('h3');
-  // let placeholder = document.createElement()
   let submit = document.createElement('button');
   let result = document.createElement('div');
+  let submit2 = document.createElement('button');
 
   let randomNumber = Math.round(Math.random() * 100);
 
-  document.body.append(div);
+  // document.body.append(div);
   div.style.width = '250px';
   div.style.height = '50px';
   div.style.backgroundColor = 'orange';
-  // div.style.margin = 'auto';
   div.style.textAlign = 'center';
-  // div.append(randomNumber);
   div.innerHTML = 'Загаданное число:' + randomNumber;
-  // div.innerHTML.style.margin = 'auto';
 
   document.body.append(inputNumber);
   inputNumber.style.padding = '10px';
   inputNumber.style.width = '250px';
   inputNumber.style.marginTop = '10px';
+  inputNumber.style.marginRight = '10px';
   inputNumber.placeholder = 'Введите число';
+  inputNumber.id = 'number';
 
   document.body.append(submit);
   submit.textContent = 'OK';
-  submit.type = 'submit';
+  submit.style.backgroundColor = 'orange';
+  submit.onmouseover = function (event) {
+    event.target.style.backgroundColor = 'rgb(255, 127, 8)';
+  }
+  submit.onmouseout = function (event) {
+    event.target.style.backgroundColor = 'orange';
+  }
+  submit.style.border = 'none';
+  submit.style.padding = '10px';
+  submit.style.borderRadius = '5px';
+  submit.style.cursor = 'pointer';
+  submit.style.outline = 'none';
   submit.id = 'btn';
-
-  // let number = prompt('Введите число');
-  // inputNumber.textContent = `${number}`;
-  inputNumber.id = 'number';
-  // let inputId = document.getElementsById('number').value;
-
+  
   document.body.append(result);
   result.id = 'result';
-  result.style.width = '200px';
-  result.style.height = '50px';
-  // result.style.backgroundColor = 'orange';
+  result.style.width = '180px';
+  result.style.height = '80px';
+  result.style.padding = '10px';
   result.style.border = '1px solid';
   result.style.marginTop = '10px';
+  result.style.marginBottom = '10px';
+  // result.onmouseover = function (event) {
+  //   event.target.textContent = 'Поле для вывода результата';
+  //   event.target.style.color = 'grey';
+  // }
+  // result.onmouseout = function (event) {
+  //   event.target.textContent = ' ';
+  //   event.target.style.color = 'black';
+  // }
+
+  document.body.append(submit2);
+  submit2.textContent = "Очистить";
+  submit2.style.backgroundColor = 'orange';
+  submit2.onmouseover = function (event) {
+    event.target.style.backgroundColor = 'rgb(255, 127, 8)';
+  }
+  submit2.onmouseout = function (event) {
+    event.target.style.backgroundColor = 'orange';
+  }
+  submit2.style.border = 'none';
+  submit2.style.padding = '10px';
+  submit2.style.cursor = 'pointer';
+  submit2.style.borderRadius = '5px';
+  submit2.id = 'btn2';
 
   function prov() {
 
     let inputId = document.getElementById('number').value;
 
-    if (inputId == randomNumber) {
-      document.getElementById('result').innerHTML = `Вы угадали. Загаданное число: ${inputId}`;
+    if (parseInt(inputId) === randomNumber) {
+      document.getElementById('result').innerHTML = `Вы угадали. Загаданное число: ${inputId}. Для генерации нового числа обновите страницу`;
     } else if (parseInt(inputId) > randomNumber) {
       document.getElementById('result').innerHTML = 'Ваше число БОЛЬШЕ';
     } else if (parseInt(inputId) < randomNumber) {
       document.getElementById('result').innerHTML = 'Ваше число МЕНЬШЕ';
+    } else if (inputId !== parseInt(inputId)) {
+      document.getElementById('result').innerHTML = 'Это не число. Попробуйте еще раз, нажав кнопку ниже';
     }
-    btn.onclick = function () {
+
+
+    btn2.onclick = function () {
       document.getElementById('number').value = '';
       document.getElementById('result').innerHTML = '';
     }
