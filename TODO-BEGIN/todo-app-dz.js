@@ -1,4 +1,4 @@
-(function() {
+(function () {
     //создаем и возвращаем заголовок  приложения
     function createAppTitle(title) {
         let appTitle = document.createElement('h2');
@@ -19,12 +19,21 @@
         buttonWrapper.classList.add('input-group-append');
         button.classList.add('btn', 'btn-primary');
         button.textContent = 'Добавить дело';
+        button.disabled = true;
+
+        input.oninput = function () {
+            if (input.value === '') {
+                button.disabled = true;
+            } else {
+                button.disabled = false;
+            }
+        }
 
         buttonWrapper.append(button);
         form.append(input);
         form.append(buttonWrapper);
 
-        //  аналог кода в html
+        // аналог кода в html
         // <form class="input-group mb-3">
         //     <input class="form-control" placeholder="Введите название нового дела">
         //     <div class="input-group-append">
@@ -48,7 +57,7 @@
 
     function createTodoItem(name) {
         let item = document.createElement('li');
-        // кнопки помещаем в эелемент, который красиво покажет их в одной группе
+        // кнопки помещаем в элемент, который красиво покажет их в одной группе
         let buttonGroup = document.createElement('div');
         let doneButton = document.createElement('button');
         let deleteButton = document.createElement('button');
@@ -63,7 +72,7 @@
         deleteButton.classList.add('btn', 'btn-danger'); // btn-danger делает кнопку красной
         deleteButton.textContent = 'Удалить';
 
-        // вкладываем кнопки в отдлеьный элемент, чтобы они объединились в один блок
+        // вкладываем кнопки в отдельный элемент, чтобы они объединились в один блок
         buttonGroup.append(doneButton);
         buttonGroup.append(deleteButton);
         item.append(buttonGroup);
@@ -84,28 +93,28 @@
         container.append(todoAppTitle);
         container.append(todoItemForm.form);
         container.append(todoList);
-        
+
         // браузер создает событие submit на форме по нажатию на Enter или на кнопку создания дела
-        todoItemForm.form.addEventListener('submit', function(e) {
+        todoItemForm.form.addEventListener('submit', function (e) {
             //эта строчка необходима, чтобы предотвратить стандартное действие браузера
             // в данном случае мы не хотим, чтобы страница перезагружалась при отправке формы
             e.preventDefault();
 
-            // игнорируем создание эелемента, если пользователь ничего не ввел в поле
+            // игнорируем создание элемента, если пользователь ничего не ввел в поле
             if (!todoItemForm.input.value) {
                 return;
             }
 
             // создаем и добавляем в список новое дело с названием из поля для ввода
             // todoList.append(createTodoItem(todoItemForm.input.value).item);
-            
+
             let todoItem = createTodoItem(todoItemForm.input.value);
 
             // добавляем обработчики на кнопки
-            todoItem.doneButton.addEventListener('click', function() {
+            todoItem.doneButton.addEventListener('click', function () {
                 todoItem.item.classList.toggle('list-group-item-success');
             });
-            todoItem.deleteButton.addEventListener('click', function() {
+            todoItem.deleteButton.addEventListener('click', function () {
                 if (confirm('Вы уверены?')) {
                     todoItem.item.remove();
                 }
@@ -116,10 +125,12 @@
 
             // обнуляем значение в поле, чтобы не пришлось стирать его вручную
             todoItemForm.input.value = '';
+            todoItemForm.button.disabled = true;
         });
     }
 
-    window.createTodoApp = createTodoApp;
+    window.TodoApp = createTodoApp;
+    // createTodoApp(document.getElementById('todo-app'), 'Мои дела');
 
     // document.addEventListener('DOMContentLoaded', function () {
     //     createTodoApp(document.getElementById('my-todos'), 'Мои дела');
@@ -127,3 +138,15 @@
     //     createTodoApp(document.getElementById('dad-todos'), 'Дела для папы');
     // });
 })();
+
+// document.addEventListener('DOMContentLoaded',function () {
+//     window.TodoApp(document.getElementById('todo-app'), 'Мои дела');
+// });
+
+// window.TodoApp(document.getElementById('todo-app'), 'Мои дела');
+
+// createTodoApp(document.getElementById('todo-app'), 'Мои дела');
+
+let inputTitle = prompt('Это приложение для списка ваших дел. Введите название');
+
+window.TodoApp(document.getElementById('todo-app'), inputTitle);

@@ -69,6 +69,12 @@
 
 // console.log(result);
 
+let timer
+function beginTimer() {
+    timer = setInterval(getNowDate, 1000);
+}
+beginTimer();
+
 function getNowDate() {
     let d = new Date();
 
@@ -98,13 +104,21 @@ function getNowDate() {
     let resultS = s + wordForm(s, [' секунда', ' секунды', ' секунд']);
 
     console.log('Сегодня ' + day + ' ' + month + ' ' + year + ' года' + ', ' + week + ', ' + resultH + ' ' + resultM + ' ' + resultS);
+    
     // setTimeout(getNowDate, 1000);
 }
-
 getNowDate();
 
-let timer = setInterval(getNowDate, 1000);
-clearInterval(timer);
+// let timer = setInterval(getNowDate, 1000);
+
+// function stopTimer() {
+//     clearInterval(timer);
+// }
+// stopTimer();
+
+setTimeout(() => { clearInterval(timer) }, 5000);
+
+
 // console.clear;
 
 // let timerId = setTimeout(getNowDate, 1);
