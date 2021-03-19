@@ -20,22 +20,35 @@ document.addEventListener('DOMContentLoaded', function () {
     enteredText.style.margin = '0px';
     enteredText.style.fontSize = '18px';
 
-    let start = function setTimer() {
-        input.onfocus = function () {
-            input.value;
-        }
-        input.onblur = function () {
-            setTimeout(getInputText, 3000);
-        }
+    // let start = function setTimer() {
+    //     input.onfocus = function () {
+    //         input.value;
+    //     }
+    //     input.onblur = function () {
+    //         setTimeout(getInputText, 3000);
+    //     }
+    // }
+
+    // function getInputText() {
+    //     enteredText.textContent = input.value;
+    // }
+
+    // clearTimeout(start);
+
+    // input.addEventListener('input', start);
+
+    let timer;
+
+    function startTimer () {
+        clearTimeout(timer);
+        timer = setTimeout(getInputText, 3000);
     }
 
     function getInputText() {
         enteredText.textContent = input.value;
     }
 
-    clearTimeout(start);
-
-    input.addEventListener('input', start);
+    input.addEventListener('keydown', startTimer);
 
 });
 
