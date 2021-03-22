@@ -55,7 +55,9 @@
         return list;
     }
 
-    function createTodoItem(name) {
+    function createTodoItem(name, index) {
+        //let index = someArray.length;
+        
         let item = document.createElement('li');
         // кнопки помещаем в элемент, который красиво покажет их в одной группе
         let buttonGroup = document.createElement('div');
@@ -74,10 +76,15 @@
 
         doneButton.addEventListener('click', function () {
             item.classList.toggle('list-group-item-success');
+            someArray[index].done = !someArray[index].done;
+            putStorage(someArray);
+            // console.log(index);
         });
         deleteButton.addEventListener('click', function () {
             if (confirm('Вы уверены?')) {
                 item.remove();
+                // someArray.splice(index);
+                // putStorage(someArray);
             }
         });
 
@@ -91,16 +98,19 @@
             item,
             doneButton,
             deleteButton,
+            index,
         }
     }
 
-    todoThings = [
-        { name: 'Купить тортик', done: false },
-        { name: 'Сходить в аптеку', done: true },
-        { name: 'Проверка', done: false }
-    ]
+    // todoThings = [
+    //     { name: 'Купить тортик', done: false },
+    //     { name: 'Сходить в аптеку', done: true },
+    //     { name: 'Проверка', done: false }
+    // ]
 
-    function createTodoApp(container, title = 'Список дел', arrayOfCases) {
+    let someArray = [];
+
+    function createTodoApp(container, title = 'Список дел', storageKey) {
         let todoAppTitle = createAppTitle(title);
         let todoItemForm = createTodoItemForm();
         let todoList = createTodoList();
@@ -109,11 +119,13 @@
         container.append(todoItemForm.form);
         container.append(todoList);
 
-        for (let i = 0; i < arrayOfCases.length; i++) {
-            let todoDone = createTodoItem(arrayOfCases[i].name);
-            
-            if (arrayOfCases[i].done === true) {
-                todoDone.item.classList.toggle('list-group-item-success');
+        someArray = pullStorage(storageKey);
+
+        for (let i = 0; i < someArray.length; i++) {
+            let todoDone = createTodoItem(someArray[i].todoName, i);
+
+            if (someArray[i].done === true) {
+                todoDone.item.classList.add('list-group-item-success');
             }
 
             todoList.append(todoDone.item);
@@ -133,7 +145,7 @@
             // создаем и добавляем в список новое дело с названием из поля для ввода
             // todoList.append(createTodoItem(todoItemForm.input.value).item);
 
-            let todoItem = createTodoItem(todoItemForm.input.value);
+            let todoItem = createTodoItem(todoItemForm.input.value, someArray.length);
 
             // добавляем обработчики на кнопки
             // todoItem.doneButton.addEventListener('click', function () {
@@ -148,10 +160,32 @@
             // создаем и добавляем в список новое дело с названием из поля для ввода
             todoList.append(todoItem.item);
 
+            let someObj = { todoName: todoItemForm.input.value, done: false };
+            someArray.push(someObj);
+
+            putStorage(someArray);
+            // putStorage(Object.assign({}, {todoName: todoItemForm.input.value, done: false}));
+            // putStorage({ ...{}, todoName: todoItemForm.input.value, done: false });
+
             // обнуляем значение в поле, чтобы не пришлось стирать его вручную
             todoItemForm.input.value = '';
             todoItemForm.button.disabled = true;
         });
+    }
+
+    // let someObj = { todoName: 'fdghgf', done: false };
+
+    // someArray.push(someObj);
+
+    // console.log(someArray);
+    // let someObj = { todoName: todoItemForm.input.value, done: false };
+
+    function putStorage(arrayOfObj) {
+        localStorage.setItem('todo', JSON.stringify(arrayOfObj));
+    }
+
+    function pullStorage(storageKey) {
+        return JSON.parse(localStorage.getItem(storageKey));
     }
 
     window.TodoApp = createTodoApp;
