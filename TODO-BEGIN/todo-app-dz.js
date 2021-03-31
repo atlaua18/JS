@@ -145,7 +145,7 @@
             // создаем и добавляем в список новое дело с названием из поля для ввода
             // todoList.append(createTodoItem(todoItemForm.input.value).item);
 
-            let todoItem = createTodoItem(todoItemForm.input.value, someArray.length);
+            let todoItem = createTodoItem(todoItemForm.input.value); //someArray.length
 
             // добавляем обработчики на кнопки
             // todoItem.doneButton.addEventListener('click', function () {
