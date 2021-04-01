@@ -20,6 +20,22 @@ document.addEventListener('DOMContentLoaded', function () {
     enteredText.style.margin = '0px';
     enteredText.style.fontSize = '18px';
 
+    let timer;
+
+    function startTimer () {
+        clearTimeout(timer);
+        timer = setTimeout(getInputText, 3000);
+    }
+
+    function getInputText() {
+        enteredText.textContent = input.value;
+    }
+
+    input.addEventListener('keydown', startTimer);
+
+});
+
+
     // let start = function setTimer() {
     //     input.onfocus = function () {
     //         input.value;
@@ -36,22 +52,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // clearTimeout(start);
 
     // input.addEventListener('input', start);
-
-    let timer;
-
-    function startTimer () {
-        clearTimeout(timer);
-        timer = setTimeout(getInputText, 3000);
-    }
-
-    function getInputText() {
-        enteredText.textContent = input.value;
-    }
-
-    input.addEventListener('keydown', startTimer);
-
-});
-
 
     // let timer;
 

@@ -7,8 +7,9 @@
     padding: 5px;
 }
 
-.display_none {
-    display: none;
+.hide {
+    /* display: none; */
+    opacity: 0%;
     width: 80px;
     height: 80px;
 }

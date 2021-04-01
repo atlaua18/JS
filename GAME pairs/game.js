@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let container = document.querySelector('.container');
     
-    function createCard(number) {
+    function createCard(number, index) {
 
         let list = document.createElement('ul');
         list.style.border = '1px solid blue';
@@ -15,21 +15,47 @@ document.addEventListener('DOMContentLoaded', function () {
         item.style.height = '80px';
         item.style.fontSize = '40px';
         item.style.textAlign = 'center';
+        item.id = index;
         item.textContent = number;
+        item.classList.add('hide');
         list.append(item);
 
         return item;
     }
 
     function createArray() {
-        let ArrayNumbers = [];
+        let arrayNumbers = [];
 
         for (let i = 1; i <= 8; i++) {
-            ArrayNumbers.push(i);
-            ArrayNumbers.push(i);
+            arrayNumbers.push(i);
+            arrayNumbers.push(i);
         }
 
-        return ArrayNumbers;
+        for(let i = arrayNumbers.length - 1; i >= 1; i--) {
+            let num = Math.round(Math.random() * i);
+            let vedro = arrayNumbers[num];
+            arrayNumbers[num] = arrayNumbers[i];
+            arrayNumbers[i] = vedro;
+        }
+
+        return arrayNumbers;
+    }
+
+    function compareCards(someNum, someId) {
+        let compareArrayNum = [];
+
+        for(let i = 0; i < 2; i++) {
+            compareArrayNum.push(someNum);
+        }
+
+        console.log(compareArrayNum);
+
+        let compareArrayId = [];
+
+        compareArrayId.push(someId);
+
+        console.log(compareArrayId);
+
     }
 
     function getManyCards(someArray) {
@@ -38,11 +64,14 @@ document.addEventListener('DOMContentLoaded', function () {
         someArray = createArray();
 
         for (let i = 0; i < someArray.length; i++) {
-            oneCard = createCard(someArray[i]);
+            oneCard = createCard(someArray[i], i);
             oneCard.addEventListener('click', (e) => {
-                let id = e.target.textContent;
-                console.log(id);
-                oneCard.classList.toggle('display_none');
+                let numberInCard = e.target.textContent;
+                let idCard = e.target.id;
+                compareCards(numberInCard, idCard);
+                // console.log(numberInCard);
+                // console.log(idCard);
+                e.target.classList.toggle('hide');
             });
         }
     }
