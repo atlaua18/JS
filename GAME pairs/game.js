@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     let container = document.querySelector('.container');
-    
+
     function createCard(number, index) {
 
         let list = document.createElement('ul');
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
             arrayNumbers.push(i);
         }
 
-        for(let i = arrayNumbers.length - 1; i >= 1; i--) {
+        for (let i = arrayNumbers.length - 1; i >= 1; i--) {
             let num = Math.round(Math.random() * i);
             let vedro = arrayNumbers[num];
             arrayNumbers[num] = arrayNumbers[i];
@@ -41,19 +41,50 @@ document.addEventListener('DOMContentLoaded', function () {
         return arrayNumbers;
     }
 
-    function compareCards(someNum, someId) {
-        let compareArrayNum = [];
+    // function createGlobalArrays(someNum, someId) {
+    //     compareArrayNum.push(someNum);
+    //     compareArrayId.push(someId);
 
-        for(let i = 0; i < 2; i++) {
-            compareArrayNum.push(someNum);
+    //     console.log(compareArrayNum);
+    //     console.log(compareArrayId);
+
+    //     return {
+    //         compareArrayNum,
+    //         compareArrayId,
+    //     }
+    // }
+
+    let compareArrayNum = [];
+    let compareArrayId = [];
+
+    function compareCards(someNum, someId) {
+
+        compareArrayNum.push(someNum);
+        compareArrayId.push(someId);
+
+        if (compareArrayNum.length === 2 && compareArrayNum[0] === compareArrayNum[1]) {
+            console.log('равны');
+
+            document.getElementById(compareArrayId[0]).style.pointerEvents = 'none';
+            document.getElementById(compareArrayId[1]).style.pointerEvents = 'none';
+  
+            compareArrayNum = [];
+            compareArrayId = [];
+        }
+
+        if (compareArrayNum.length === 2 && compareArrayNum[0] !== compareArrayNum[1]) {
+            console.log('НЕравны');
+            setTimeout(() => {
+                document.getElementById(compareArrayId[0]).classList.toggle('hide');
+                document.getElementById(compareArrayId[1]).classList.toggle('hide');
+
+                compareArrayNum = [];
+                compareArrayId = [];
+            }, 1000);
+
         }
 
         console.log(compareArrayNum);
-
-        let compareArrayId = [];
-
-        compareArrayId.push(someId);
-
         console.log(compareArrayId);
 
     }
@@ -77,6 +108,29 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     getManyCards();
 });
+
+ // document.getElementById(compareArrayId[0]).setAttribute("onclick", "addHendler();");
+            // document.getElementById(compareArrayId[1]).setAttribute("onclick", "addHendler();");
+            
+            // e.preventDefault();
+            // function notClick (e) {
+            //     e.preventDefault();
+            // }
+            // notClick();
+            // function addHendler() {
+            //     document.getElementById(compareArrayId[0]).addEventListener('click', notClick, false);
+            //     document.getElementById(compareArrayId[1]).addEventListener('click', notClick, false);
+            // }
+            // document.getElementById(compareArrayId[0]).addEventListener('click', addHendler);
+            // document.getElementById(compareArrayId[1]).addEventListener('click', addHendler);
+
+            // document.getElementById(compareArrayId[0]).addEventListener('click', addHendler, true);
+            // function addHendler(e){
+            //     if(e.target.id == document.getElementById(compareArrayId[0])) {
+            //     e.stopPropagation();
+            //     e.preventDefault();
+            // }
+            // }
 
 // let card = document.querySelector('.card');
     // let cardContent = document.querySelector('.card_content');
