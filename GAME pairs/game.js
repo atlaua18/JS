@@ -2,23 +2,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let container = document.querySelector('.container');
 
-    function createCard(number, index) {
+    function createUl() {
 
-        let list = document.createElement('ul');
-        list.style.border = '1px solid blue';
-        list.style.padding = '0';
-        container.append(list);
+        let ul = document.createElement('ul');
+        ul.classList.add('ul');
+        container.append(ul);
+        return ul;
+    }
+    // container.append(ul);
 
+    function createCard(number, index, ul) {
         let item = document.createElement('li');
-        item.style.listStyleType = 'none';
-        item.style.width = '80px';
-        item.style.height = '80px';
-        item.style.fontSize = '40px';
-        item.style.textAlign = 'center';
+        item.classList.add('li');
         item.id = index;
         item.textContent = number;
         item.classList.add('hide');
-        list.append(item);
+        ul.append(item);
 
         return item;
     }
@@ -41,21 +40,9 @@ document.addEventListener('DOMContentLoaded', function () {
         return arrayNumbers;
     }
 
-    // function createGlobalArrays(someNum, someId) {
-    //     compareArrayNum.push(someNum);
-    //     compareArrayId.push(someId);
-
-    //     console.log(compareArrayNum);
-    //     console.log(compareArrayId);
-
-    //     return {
-    //         compareArrayNum,
-    //         compareArrayId,
-    //     }
-    // }
-
     let compareArrayNum = [];
     let compareArrayId = [];
+    let count = 0;
 
     function compareCards(someNum, someId) {
 
@@ -63,17 +50,15 @@ document.addEventListener('DOMContentLoaded', function () {
         compareArrayId.push(someId);
 
         if (compareArrayNum.length === 2 && compareArrayNum[0] === compareArrayNum[1]) {
-            console.log('равны');
 
             document.getElementById(compareArrayId[0]).style.pointerEvents = 'none';
             document.getElementById(compareArrayId[1]).style.pointerEvents = 'none';
-  
+
             compareArrayNum = [];
             compareArrayId = [];
-        }
 
-        if (compareArrayNum.length === 2 && compareArrayNum[0] !== compareArrayNum[1]) {
-            console.log('НЕравны');
+            count += 2;
+        } else if (compareArrayNum.length === 2 && compareArrayNum[0] !== compareArrayNum[1]) {
             setTimeout(() => {
                 document.getElementById(compareArrayId[0]).classList.toggle('hide');
                 document.getElementById(compareArrayId[1]).classList.toggle('hide');
@@ -83,35 +68,94 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 1000);
 
         }
-
-        console.log(compareArrayNum);
-        console.log(compareArrayId);
-
+        
+    updateGame();
     }
 
-    function getManyCards(someArray) {
+    function getManyCards() {
 
         let oneCard;
-        someArray = createArray();
+        let someArray = createArray();
+        let ul = createUl();
 
         for (let i = 0; i < someArray.length; i++) {
-            oneCard = createCard(someArray[i], i);
+            oneCard = createCard(someArray[i], i, ul);
             oneCard.addEventListener('click', (e) => {
                 let numberInCard = e.target.textContent;
                 let idCard = e.target.id;
                 compareCards(numberInCard, idCard);
-                // console.log(numberInCard);
-                // console.log(idCard);
                 e.target.classList.toggle('hide');
             });
         }
     }
     getManyCards();
+
+
+    function updateGame() {
+
+        if(count === 16) {
+            let button = document.createElement('button');
+            button.classList.add('btn');
+            button.textContent = 'Сыграть ещё раз';
+            document.body.append(button);
+            button.addEventListener('click', () => {
+                let ul = document.getElementsByTagName('ul')[0];
+                ul.remove();
+                getManyCards();
+            });
+            
+        } else return;
+    }
 });
+// let arr = [];
+        // let itemLi = document.getElementsByTagName('li');
+        // for (let i = 0; i < itemLi.length; i++) {
+        //     arr.push(itemLi[i]);
+        // }
+        // if(!arr[0].className.includes("hide"))
+        // if(arr[0].style.pointerEvents === "none") 
+        // for (let classHide of arr) {
+        //     let classHide = arr[0].classList.contains('hide');
+        //     console.log(classHide);
+        // }
+        // if(!arr[0].classList.contains('hide')){
+        //     console.log('проверка');
+        //     let button = document.createElement('button');
+        //     button.classList.add('btn');
+        //     button.textContent = 'Сыграть ещё раз';
+        //     document.body.append(button);
+        // }
+        // console.log(itemLi);
+        // console.log(arr);
+        // let button = document.createElement('button');
+        // button.classList.add('btn');
+        // button.textContent = 'Сыграть ещё раз';
+        // document.body.append(button);
+
+// function createCard(number, index) {
+
+    //     let list = document.createElement('ul');
+    //     list.style.border = '1px solid blue';
+    //     list.style.padding = '0';
+    //     container.append(list);
+
+    //     let item = document.createElement('li');
+    //     item.style.listStyleType = 'none';
+    //     item.style.width = '80px';
+    //     item.style.height = '80px';
+    //     item.style.fontSize = '40px';
+    //     item.style.textAlign = 'center';
+    //     item.id = index;
+    //     item.textContent = number;
+    //     item.classList.add('hide');
+    //     list.append(item);
+
+    //     return item;
+    // }
 
  // document.getElementById(compareArrayId[0]).setAttribute("onclick", "addHendler();");
             // document.getElementById(compareArrayId[1]).setAttribute("onclick", "addHendler();");
-            
+
             // e.preventDefault();
             // function notClick (e) {
             //     e.preventDefault();
