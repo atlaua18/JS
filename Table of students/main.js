@@ -3,13 +3,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputSurname = document.getElementById('surname');
     const inputName = document.getElementById('name');
     const inputMiddleName = document.getElementById('middleName');
-    const birthday = document.getElementById('birthday');
-    const startYear = document.getElementById('startYear');
-    const faculty = document.getElementById('faculty');
+    const inputBirthday = document.getElementById('birthday');
+    const inputStartYear = document.getElementById('startYear');
+    const inputFaculty = document.getElementById('faculty');
     const form = document.getElementById('form');
 
-    const minDate = new Date(1900, 01, 01);
-    const carrentDate = new Date();
+    const divError = document.createElement('div');
+    const spanError = document.createElement('span');
+    document.body.append(spanError);
+    document.body.append(divError);
+    spanError.textContent = 'В следующих полях была допущена ошибка: ';
+
+    const minDate = new Date(1900, 00, 01);
+    const currentDate = new Date();
 
     const arrayOfStudents = [];
 
@@ -18,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             surname,
             name,
             middleName,
-            birthday,
+            birthday: new Date(birthday),
             startYear,
             faculty,
         }
@@ -28,34 +34,35 @@ document.addEventListener('DOMContentLoaded', () => {
         let isSurnameValid = true;
         let isNameValid = true;
         let isMiddleNameValid = true;
+        let isBirthdayValid = true;
+        let isStartYearValid = true;
         let isFacultyValid = true;
         let isValid = true;
 
-        if(inputSurname.value.trim() === '') {
+        let yearBirthday = new Date(inputBirthday.value).getFullYear();
+
+        if (inputSurname.value.trim() === '') {
             isSurnameValid = false;
         }
-        if(inputName.value.trim() === '') {
+        if (inputName.value.trim() === '') {
             isNameValid = false;
-        } 
-        if(inputMiddleName.value.trim() === '') {
-            isNameValid = false;
-        } 
-        if(minDate < birthday.value < carrentDate) {
-            isNameValid = false;
-        } 
-        if(startYear.value < 2000) {
-            isNameValid = false;
-        } 
-        if(faculty.value.trim() === '') {
-            isNameValid = false;
-        } 
-        
-        else {
-            isValid = true;
         }
+        if (inputMiddleName.value.trim() === '') {
+            isMiddleNameValid = false;
+        }
+        if (minDate.getFullYear() > yearBirthday || yearBirthday > currentDate.getFullYear() || isNaN(yearBirthday)) {
+            isBirthdayValid = false;
+        }
+        if (inputStartYear.value < 2000) {
+            isStartYearValid = false;
+        }
+        if (inputFaculty.value.trim() === '') {
+            isFacultyValid = false;
+        }
+
         return {
             isSurnameValid,
-            isNameValid, 
+            isNameValid,
             isMiddleNameValid,
             isBirthdayValid,
             isStartYearValid,
@@ -68,33 +75,58 @@ document.addEventListener('DOMContentLoaded', () => {
         inputSurname.value = '';
         inputName.value = '';
         inputMiddleName.value = '';
-        birthday.value = '';
-        startYear.value = '';
-        faculty.value = '';
+        inputBirthday.value = '';
+        inputStartYear.value = '';
+        inputFaculty.value = '';
     }
+
+    function createTable(array) {
+        let dataStudent = createNewStudent();
+        let cell = document.querySelector('.table_body');
+        let tr = document.createElement('tr');
+        cell.append(tr);
+        let td;
+
+        for (let i = 0; i < 4; i++) {
+            td = document.createElement('td');
+            tr.append(td);
+            td.id = i;
+        }
+
+        // td.id[0].textContent = arrayOfStudents[0].surname;
+        document.getElementById(0).textContent = arrayOfStudents[0].surname + ' ' + arrayOfStudents[0].name + ' ' + arrayOfStudents[0].middleName;
+        document.getElementById(1).textContent = arrayOfStudents[0].faculty;
+        document.getElementById(2).textContent = currentDate.getFullYear() - arrayOfStudents[0].birthday.getFullYear();
+        let y = parseInt(arrayOfStudents[0].startYear) + 4;
+        document.getElementById(3).textContent = arrayOfStudents[0].startYear + '-' + y;
+    }
+    // createTable();
 
     form.addEventListener('submit', (event) => {
         event.preventDefault();
+
         let validationResult = validate();
         let errorMessage = '';
-        if(!validationResult.isValid) {
-            errorMessage += validationResult.isNameValid ? "" : "Имя \n";
-            errorMessage += validationResult.isSurnameValid ? "" : "Фамилия \n";
-        }
-        if (inputSurname.value.trim() === '' ||
-            inputName.value.trim() === '' ||
-            inputMiddleName.value.trim() === '' ||
-            faculty.value.trim() === '') {
-            console.log('ошибка');
-        } else {
+        if (validationResult.isValid) {
+            errorMessage += validationResult.isSurnameValid ? "" : "Фамилия" + '<br>';
+            errorMessage += validationResult.isNameValid ? "" : "Имя" + '<br>';
+            errorMessage += validationResult.isMiddleNameValid ? "" : "Отчество" + '<br>';
+            errorMessage += validationResult.isBirthdayValid ? "" : "Дата рождения" + '<br>';
+            errorMessage += validationResult.isStartYearValid ? "" : "Год начала обучения" + '<br>';
+            errorMessage += validationResult.isFacultyValid ? "" : "Факультет";
+            divError.innerHTML = errorMessage;
+        } 
+        if(divError.innerHTML === ""){
             arrayOfStudents.push(createNewStudent(
                 inputSurname.value.trim(),
                 inputName.value.trim(),
                 inputMiddleName.value.trim(),
-                birthday.value,
-                startYear.value,
-                faculty.value.trim()
+                inputBirthday.value,
+                inputStartYear.value,
+                inputFaculty.value.trim()
             ));
+
+            createTable(arrayOfStudents);
         }
         clearForm();
         console.log(arrayOfStudents);
@@ -102,3 +134,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // birthday.value = Intl.DateTimeFormat("en-US").format(new Date());
+
+// if (inputSurname.value.trim() === '' ||
+        //     inputName.value.trim() === '' ||
+        //     inputMiddleName.value.trim() === '' ||
+        //     inputFaculty.value.trim() === '') {
+        //     console.log('ошибка');
+        // } 
