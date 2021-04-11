@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     const inputSurname = document.getElementById('surname');
     const inputName = document.getElementById('name');
     const inputMiddleName = document.getElementById('middleName');
@@ -18,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentDate = new Date();
 
     let arrayOfStudents = [];
+
     if (localStorage.getItem('studentsTable') !== null) {
         arrayOfStudents = JSON.parse(localStorage.getItem('studentsTable'));
         arrayOfStudents.forEach(element => {
@@ -93,6 +93,20 @@ document.addEventListener('DOMContentLoaded', () => {
         inputFaculty.value = '';
     }
 
+    function birthdayString(birthdayDate) {
+        let day = birthdayDate.getDate();
+        if(day < 10) {
+            day = '0' + day;
+        }
+        let month = birthdayDate.getMonth() + 1;
+        if(month < 10) {
+            month = '0' + month;
+        }
+        let year = birthdayDate.getFullYear();
+
+        return `${day}.${month}.${year}`;
+    }
+
     function getAge(currentDate, birthdayDate) {
         let age = 0;
         if(currentDate.getMonth() > birthdayDate.getMonth()) {
@@ -110,6 +124,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return age;
     }
 
+    function studyCourse(startYear, endYear, currentDate) {  //currentDate
+        let course = 0;
+        
+        if(currentDate.getFullYear() > endYear) {
+            course = 'закончен';
+        } 
+        return course;
+    }
+
     function addRow(student) { 
         let tr = document.createElement('tr');
             
@@ -123,11 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     td.textContent = student.faculty;
                     break;
                 case 2:
-                    td.textContent = getAge(currentDate, student.birthday);
+                    td.textContent = birthdayString(student.birthday) + ' ' + '(' + getAge(currentDate, student.birthday) + ')';
                     break;
                 case 3:
                     let endYear = parseInt(student.startYear) + 4;
-                    td.textContent = student.startYear + '-' + endYear;
+                    td.textContent = student.startYear + '-' + endYear + '(' + studyCourse(student.startYear, endYear, currentDate) + ')';
                     break;
             }
             tr.append(td);

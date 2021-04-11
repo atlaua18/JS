@@ -1,3 +1,50 @@
+let timer
+function beginTimer() {
+    timer = setInterval(getNowDate, 1000);
+}
+beginTimer();
+
+function getNowDate() {
+    let d = new Date();
+
+    let day = d.getDate(); // возвращает текущий день // Возвращает день месяца (1-31) указанной даты по местному времени.
+
+    let monthArr = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+    let month = monthArr[d.getMonth()];
+    // let month = d.toLocaleDateString('ru', { month: 'long' } );
+
+    let year = d.getFullYear(); // Возвращает год (4 цифры для 4-х значного года) указанной даты по местному времени. // просто getYear() вернети индекс года - 121
+
+    let dayWeekArr = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
+    let week = dayWeekArr[d.getDay()];
+
+    let wordForm = function (num, word) {
+        cases = [2, 0, 1, 1, 1, 2];
+        return word[(num % 100 > 4 && num % 100 < 20) ? 2 : cases[(num % 10 < 5) ? num % 10 : 5]];
+    }
+
+    let h = d.getHours();
+    let resultH = h + wordForm(h, [' час', ' часа', ' часов']);
+
+    let m = d.getMinutes();
+    let resultM = m + wordForm(m, [' минута', ' минуты', ' минут']);
+
+    let s = d.getSeconds();
+    let resultS = s + wordForm(s, [' секунда', ' секунды', ' секунд']);
+
+    console.log('Сегодня ' + day + ' ' + month + ' ' + year + ' года' + ', ' + week + ', ' + resultH + ' ' + resultM + ' ' + resultS);
+    
+}
+getNowDate();
+
+setTimeout(() => { clearInterval(timer) }, 5000);
+
+
+// console.clear;
+
+// let timerId = setTimeout(getNowDate, 1);
+// console.log(timerId);
+
 // let d = new Date();
 // let year = d.getYear();
 // let d = new Date(year, month, day);
@@ -68,58 +115,3 @@
 // let result = s + wordForm(s, [' секунда', ' секунды', ' секунд']);
 
 // console.log(result);
-
-let timer
-function beginTimer() {
-    timer = setInterval(getNowDate, 1000);
-}
-beginTimer();
-
-function getNowDate() {
-    let d = new Date();
-
-    let day = d.getDate(); // возвращает текущий день // Возвращает день месяца (1-31) указанной даты по местному времени.
-
-    let monthArr = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-    let month = monthArr[d.getMonth()];
-    // let month = d.toLocaleDateString('ru', { month: 'long' } );
-
-    let year = d.getFullYear(); // Возвращает год (4 цифры для 4-х значного года) указанной даты по местному времени. // просто getYear() вернети индекс года - 121
-
-    let dayWeekArr = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
-    let week = dayWeekArr[d.getDay()];
-
-    let wordForm = function (num, word) {
-        cases = [2, 0, 1, 1, 1, 2];
-        return word[(num % 100 > 4 && num % 100 < 20) ? 2 : cases[(num % 10 < 5) ? num % 10 : 5]];
-    }
-
-    let h = d.getHours();
-    let resultH = h + wordForm(h, [' час', ' часа', ' часов']);
-
-    let m = d.getMinutes();
-    let resultM = m + wordForm(m, [' минута', ' минуты', ' минут']);
-
-    let s = d.getSeconds();
-    let resultS = s + wordForm(s, [' секунда', ' секунды', ' секунд']);
-
-    console.log('Сегодня ' + day + ' ' + month + ' ' + year + ' года' + ', ' + week + ', ' + resultH + ' ' + resultM + ' ' + resultS);
-    
-    // setTimeout(getNowDate, 1000);
-}
-getNowDate();
-
-// let timer = setInterval(getNowDate, 1000);
-
-// function stopTimer() {
-//     clearInterval(timer);
-// }
-// stopTimer();
-
-setTimeout(() => { clearInterval(timer) }, 5000);
-
-
-// console.clear;
-
-// let timerId = setTimeout(getNowDate, 1);
-// console.log(timerId);
