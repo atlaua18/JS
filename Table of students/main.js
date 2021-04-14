@@ -93,20 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
         inputFaculty.value = '';
     }
 
-    function birthdayString(birthdayDate) {
-        let day = birthdayDate.getDate();
-        if(day < 10) {
-            day = '0' + day;
-        }
-        let month = birthdayDate.getMonth() + 1;
-        if(month < 10) {
-            month = '0' + month;
-        }
-        let year = birthdayDate.getFullYear();
-
-        return `${day}.${month}.${year}`;
-    }
-
     function getAge(currentDate, birthdayDate) {
         let age = 0;
         if(currentDate.getMonth() > birthdayDate.getMonth()) {
@@ -124,12 +110,20 @@ document.addEventListener('DOMContentLoaded', () => {
         return age;
     }
 
-    function studyCourse(startYear, endYear, currentDate) {  //currentDate
+    function studyCourse(startYear, endYear, currentDate) {
         let course = 0;
         
-        if(currentDate.getFullYear() > endYear) {
-            course = 'закончен';
-        } 
+        if (currentDate.getFullYear() > endYear) { //учесть сентябрь??? currentDate.getMonth() === 8 (месяцы с 0)
+            course = 'закончил';
+        } else if (currentDate.getFullYear() - startYear === 1 || currentDate.getFullYear() - startYear === 0) {
+            course = 1;
+        } else if (currentDate.getFullYear() - startYear === 2) {
+            course = 2;
+        } else if (currentDate.getFullYear() - startYear === 3) {
+            course = 3;
+        } else if (currentDate.getFullYear() - startYear === 4) {
+            course = 4;
+        }    
         return course;
     }
 
@@ -146,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     td.textContent = student.faculty;
                     break;
                 case 2:
-                    td.textContent = birthdayString(student.birthday) + ' ' + '(' + getAge(currentDate, student.birthday) + ')';
+                    td.textContent = student.birthday.toLocaleDateString() + ' ' + '(' + getAge(currentDate, student.birthday) + ')';
                     break;
                 case 3:
                     let endYear = parseInt(student.startYear) + 4;
@@ -197,6 +191,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         //#region Comments
+        
+    // function birthdayString(birthdayDate) {
+    //     let day = birthdayDate.getDate();
+    //     if(day < 10) {
+    //         day = '0' + day;
+    //     }
+    //     let month = birthdayDate.getMonth() + 1;
+    //     if(month < 10) {
+    //         month = '0' + month;
+    //     }
+    //     let year = birthdayDate.getFullYear();
+
+    //     return `${day}.${month}.${year}`;
+    // }
 
         // let storageArr = [];
     // function storage() {

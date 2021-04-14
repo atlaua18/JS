@@ -33,14 +33,6 @@
         form.append(input);
         form.append(buttonWrapper);
 
-        // аналог кода в html
-        // <form class="input-group mb-3">
-        //     <input class="form-control" placeholder="Введите название нового дела">
-        //     <div class="input-group-append">
-        //         <button class="btn btn-primary">Добавить дело</button>
-        //     </div>
-        // </form>
-
         return {
             form,
             input,
@@ -55,7 +47,7 @@
         return list;
     }
 
-    function createTodoItem(name, index) {
+    function createTodoItem(name, index, storageKey) {
         //let index = someArray.length;
         
         let item = document.createElement('li');
@@ -77,14 +69,14 @@
         doneButton.addEventListener('click', function () {
             item.classList.toggle('list-group-item-success');
             someArray[index].done = !someArray[index].done;
-            putStorage(someArray);
-            // console.log(index);
+            putStorage(someArray,storageKey);
+            console.log(index);
         });
         deleteButton.addEventListener('click', function () {
             if (confirm('Вы уверены?')) {
                 item.remove();
-                // someArray.splice(index);
-                // putStorage(someArray);
+                someArray.splice(index, 1);
+                putStorage(someArray,storageKey);
             }
         });
 
@@ -102,12 +94,6 @@
         }
     }
 
-    // todoThings = [
-    //     { name: 'Купить тортик', done: false },
-    //     { name: 'Сходить в аптеку', done: true },
-    //     { name: 'Проверка', done: false }
-    // ]
-
     let someArray = [];
 
     function createTodoApp(container, title = 'Список дел', storageKey) {
@@ -122,7 +108,7 @@
         someArray = pullStorage(storageKey);
 
         for (let i = 0; i < someArray.length; i++) {
-            let todoDone = createTodoItem(someArray[i].todoName, i);
+            let todoDone = createTodoItem(someArray[i].todoName, i, storageKey);
 
             if (someArray[i].done === true) {
                 todoDone.item.classList.add('list-group-item-success');
@@ -145,9 +131,37 @@
             // создаем и добавляем в список новое дело с названием из поля для ввода
             // todoList.append(createTodoItem(todoItemForm.input.value).item);
 
-            let todoItem = createTodoItem(todoItemForm.input.value); //someArray.length
+            let todoItem = createTodoItem(todoItemForm.input.value, someArray.length); //someArray.length
 
-            // добавляем обработчики на кнопки
+            // создаем и добавляем в список новое дело с названием из поля для ввода
+            todoList.append(todoItem.item);
+
+            let someObj = { todoName: todoItemForm.input.value, done: false };
+            someArray.push(someObj);
+
+            putStorage(someArray, storageKey);
+
+            // обнуляем значение в поле, чтобы не пришлось стирать его вручную
+            todoItemForm.input.value = '';
+            todoItemForm.button.disabled = true;
+        });
+    }
+
+    function putStorage(arrayOfObj, storageKey) {
+        localStorage.setItem(storageKey, JSON.stringify(arrayOfObj));
+    }
+
+    function pullStorage(storageKey) {
+        return JSON.parse(localStorage.getItem(storageKey));
+    }
+
+    window.TodoApp = createTodoApp;
+    
+})();
+
+//#region Comments
+
+// добавляем обработчики на кнопки
             // todoItem.doneButton.addEventListener('click', function () {
             //     todoItem.item.classList.toggle('list-group-item-success');
             // });
@@ -157,46 +171,22 @@
             //     }
             // });
 
-            // создаем и добавляем в список новое дело с названием из поля для ввода
-            todoList.append(todoItem.item);
+// аналог кода в html
+        // <form class="input-group mb-3">
+        //     <input class="form-control" placeholder="Введите название нового дела">
+        //     <div class="input-group-append">
+        //         <button class="btn btn-primary">Добавить дело</button>
+        //     </div>
+        // </form>
 
-            let someObj = { todoName: todoItemForm.input.value, done: false };
-            someArray.push(someObj);
+    // todoThings = [
+    //     { name: 'Купить тортик', done: false },
+    //     { name: 'Сходить в аптеку', done: true },
+    //     { name: 'Проверка', done: false }
+    // ]
 
-            putStorage(someArray);
             // putStorage(Object.assign({}, {todoName: todoItemForm.input.value, done: false}));
             // putStorage({ ...{}, todoName: todoItemForm.input.value, done: false });
-
-            // обнуляем значение в поле, чтобы не пришлось стирать его вручную
-            todoItemForm.input.value = '';
-            todoItemForm.button.disabled = true;
-        });
-    }
-
-    // let someObj = { todoName: 'fdghgf', done: false };
-
-    // someArray.push(someObj);
-
-    // console.log(someArray);
-    // let someObj = { todoName: todoItemForm.input.value, done: false };
-
-    function putStorage(arrayOfObj) {
-        localStorage.setItem('todo', JSON.stringify(arrayOfObj));
-    }
-
-    function pullStorage(storageKey) {
-        return JSON.parse(localStorage.getItem(storageKey));
-    }
-
-    window.TodoApp = createTodoApp;
-    // createTodoApp(document.getElementById('todo-app'), 'Мои дела');
-
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     createTodoApp(document.getElementById('my-todos'), 'Мои дела');
-    //     createTodoApp(document.getElementById('mom-todos'), 'Дела для мамы');
-    //     createTodoApp(document.getElementById('dad-todos'), 'Дела для папы');
-    // });
-})();
 
 // document.addEventListener('DOMContentLoaded',function () {
 //     window.TodoApp(document.getElementById('todo-app'), 'Мои дела');
@@ -209,3 +199,22 @@
 // let inputTitle = prompt('Это приложение для списка ваших дел. Введите название');
 
 // window.TodoApp(document.getElementById('todo-app'), inputTitle);
+
+// createTodoApp(document.getElementById('todo-app'), 'Мои дела');
+
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     createTodoApp(document.getElementById('my-todos'), 'Мои дела');
+    //     createTodoApp(document.getElementById('mom-todos'), 'Дела для мамы');
+    //     createTodoApp(document.getElementById('dad-todos'), 'Дела для папы');
+    // });
+
+    
+
+    // let someObj = { todoName: 'fdghgf', done: false };
+
+    // someArray.push(someObj);
+
+    // console.log(someArray);
+    // let someObj = { todoName: todoItemForm.input.value, done: false };
+
+    //#endregion 
