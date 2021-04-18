@@ -152,6 +152,21 @@ document.addEventListener('DOMContentLoaded', () => {
         table.append(tr);
     }
 
+    //#region Event Listeners
+
+    document.getElementById('fio_header').addEventListener('click', () => {
+        const sortedArr = arrayOfStudents.sort((obj1, obj2) => {
+            const fio1 = obj1.surname + " " + obj1.name + " " + obj1.middleName;
+            const fio2 = obj2.surname + " " + obj2.name + " " + obj2.middleName;
+            if(fio1 > fio2) {
+                return 1;
+            } else if(fio1 < fio2) {
+                return -1;
+            } else return 0;
+        });
+        console.log(sortedArr);
+    });
+
     form.addEventListener('submit', (event) => {
         event.preventDefault();
 
@@ -182,6 +197,8 @@ document.addEventListener('DOMContentLoaded', () => {
         clearForm();
         console.log(arrayOfStudents);
     });
+
+    //#endregion
 
     function putStorage(someArr) {
         localStorage.setItem(`studentsTable`, JSON.stringify(someArr));

@@ -70,13 +70,14 @@
             item.classList.toggle('list-group-item-success');
             someArray[index].done = !someArray[index].done;
             putStorage(someArray,storageKey);
-            console.log(index);
+            location.reload();
         });
         deleteButton.addEventListener('click', function () {
             if (confirm('Вы уверены?')) {
                 item.remove();
                 someArray.splice(index, 1);
                 putStorage(someArray,storageKey);
+                location.reload();
             }
         });
 
@@ -131,7 +132,7 @@
             // создаем и добавляем в список новое дело с названием из поля для ввода
             // todoList.append(createTodoItem(todoItemForm.input.value).item);
 
-            let todoItem = createTodoItem(todoItemForm.input.value, someArray.length); //someArray.length
+            let todoItem = createTodoItem(todoItemForm.input.value, someArray.length, storageKey); //someArray.length
 
             // создаем и добавляем в список новое дело с названием из поля для ввода
             todoList.append(todoItem.item);
@@ -152,7 +153,11 @@
     }
 
     function pullStorage(storageKey) {
-        return JSON.parse(localStorage.getItem(storageKey));
+        const storageItem = localStorage.getItem(storageKey);
+        if(storageItem !== null) {
+            return JSON.parse(storageItem);
+        }
+        return [];
     }
 
     window.TodoApp = createTodoApp;
