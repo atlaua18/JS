@@ -119,7 +119,7 @@
         }
 
         // браузер создает событие submit на форме по нажатию на Enter или на кнопку создания дела
-        todoItemForm.form.addEventListener('submit', function (e) {
+        todoItemForm.form.addEventListener('submit', async function (e) {
             //эта строчка необходима, чтобы предотвратить стандартное действие браузера
             // в данном случае мы не хотим, чтобы страница перезагружалась при отправке формы
             e.preventDefault();
@@ -129,13 +129,25 @@
                 return;
             }
 
+            const response = await fetch('http://localhost:3000/api/todos', {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: todoItemForm.input.value.trim(),
+                    owner: 'Настя'
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            const todoItem = await response.json(); 
+
             // создаем и добавляем в список новое дело с названием из поля для ввода
             // todoList.append(createTodoItem(todoItemForm.input.value).item);
 
-            let todoItem = createTodoItem(todoItemForm.input.value, someArray.length, storageKey); //someArray.length
+            let todoItemElement = createTodoItem(todoItem.name, someArray.length, storageKey); //первый парам был todoItemForm.input.value
 
             // создаем и добавляем в список новое дело с названием из поля для ввода
-            todoList.append(todoItem.item);
+            todoList.append(todoItemElement.item);
 
             let someObj = { todoName: todoItemForm.input.value, done: false };
             someArray.push(someObj);
