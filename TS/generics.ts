@@ -10,6 +10,7 @@ interface myArray<T> { // myArray принимает некий тип Т
     [N: number]: T; // и устанавливает наш тип Т в индекс сигнатуру
 
     map<U>(fn: (el: T, index: number, arr: myArray<T>) => U): myArray<U>;
+    reduce<U>(fn: (accumulator: T, value: T, index: number, arr: myArray<T>) => U, initialValue: T): U;
 }
 
 let valueA = myArr[1];
@@ -18,6 +19,7 @@ myArr.map // показывает ошибку, так как TS ничего н
 // ошибка исчезает, когда определяем метода map
 myArr.map((f) => f + 1);
 myArr.map((f) => `f + ${f}`);
+myArr.reduce((f, n) => `${f} + ${n}`, 0);
 
 
 function identity<T>(arg: T): T {

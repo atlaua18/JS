@@ -17,7 +17,7 @@ let person1 = {
     },
     name: "Tom",
     age: 40,
-    surname: "Zalupa",
+    surname: "BlaBlaBla",
     getDateOfDie: function() {
         return this.age + 40;
     }
